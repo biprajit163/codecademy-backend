@@ -16,7 +16,6 @@ const nounsArr = nouns_data.split('\n');
 
 
 
-
 const playGame = () => {
     
     let isPlaying = true;
