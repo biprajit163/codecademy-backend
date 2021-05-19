@@ -10,6 +10,22 @@ You can see the competencies we'll be grading it on [here](https://github.com/Co
 
 Rest assured, we won't use the code for anything other than as part of your application.
 
+## Option 1: Backend Challenge
+Github Repository = https://github.com/codecademy-engineering/question-apprenticeship-takehome/tree/main/backend 
+
+
+> To Complete this challenge:
+- Write a solution in any coding language
+- In your solution, include a DOCS.md file with instructions on how to run your code. Please note: if you do not include this file or your instructions are not correct, we will not consider your submission.
+- When you’re done, compress your solution files into one zip file.
+- Click the **submission link at the bottom of this email**, and use one of the provided options to upload your zip file.
+- Please indicate in the text box for the submission link what programming language you used to complete the challenge.
+
+> **Submission Link:** 
+https://app2.greenhouse.io/tests/0bd3e504b43ae5c904011a8113cc5967?utm_medium=email&utm_source=TakeHomeTest 
+
+
+
 ## UFO: The Game
 
 ```
