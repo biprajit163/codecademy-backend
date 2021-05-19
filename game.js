@@ -20,13 +20,16 @@ const playGame = () => {
     
     let isPlaying = true;
 
-    while(isPlaying === true) {
+    // while(isPlaying === true) {
 
-        // Game logic goes here
-        console.log('Game is Running');
+    //     // Game logic goes here
+    //     console.log('Game is Running');
 
-        endGame(isPlaying);
-    }
+    //     endGame(isPlaying);
+    // }
+
+    return isPlaying;
+
 };
 
 
@@ -45,4 +48,9 @@ const endGame = (isPlaying) => {
 }
 
 playGame();
+
+
+module.exports = {
+    playGame: playGame,
+}
 
