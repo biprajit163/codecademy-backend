@@ -20,22 +20,32 @@ const playGame = () => {
     
     let isPlaying = true;
 
-    // while(isPlaying === true) {
+    while(isPlaying === true) {
 
-    //     // Game logic goes here
-    //     console.log('Game is Running');
+        // Game logic goes here
+        console.log('Game is Running');
 
-    //     endGame(isPlaying);
-    // }
+        endGame(isPlaying);
+    }
 
-    return isPlaying;
 
 };
 
 
 const testUser = () => {
-    let usrAns = ps('pick a letter a-z: ');
-    return usrAns;
+    let letter = ps('pick a letter a-z: ');
+    let codeword = 'apple'
+    let result;
+
+    for(let i=0; i < codeword.length; i++) {
+        if(letter === codeword[i]) {
+            result = true;
+        } else {
+            result = false;
+        }
+    }
+
+    return result;
 };
 
 
@@ -57,7 +67,6 @@ playGame();
 
 
 module.exports = {
-    playGame,
     testUser, 
 }
 
