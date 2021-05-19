@@ -33,6 +33,12 @@ const playGame = () => {
 };
 
 
+const testUser = () => {
+    let usrAns = ps('pick a letter a-z: ');
+    return usrAns;
+};
+
+
 const endGame = (isPlaying) => {
     let userAns = ps('Do you want to keep playing? [yes or no] : ');
 
@@ -51,6 +57,7 @@ playGame();
 
 
 module.exports = {
-    playGame: playGame,
+    playGame,
+    testUser, 
 }
 
