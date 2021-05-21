@@ -24,28 +24,31 @@ const playGame = () => {
     let ufoLevel = 0;
     let incorrectGuesses = [];
     let correctGuesses = [];
+    
     let codeDash = [];
-
-    for(let i=0; i < codeword.length; i++) {
+    for(let i=0; i < codeword.length-1; i++) {
         codeDash.push("_");
     }
 
     console.log("UFO: The Game" + "\n" + "Instructions: save us from alien abduction by guessing letters in the codeword");
 
     while(isPlaying === true) {
-
         if(ufoLevel === ufoArr.length) {
-            endGame();
+            isPlaying = endGame(isPlaying);
+
             codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
+            codeDash = [];
+            for(let i=0; i < codeword.length-1; i++) {
+                codeDash.push("_");
+            };
+
             ufoLevel = 0;
         } else {
             console.log(ufoArr[ufoLevel]);
-
-            // logging code word with dashes
             userInput(codeword, codeDash, correctGuesses, incorrectGuesses);
-
-            ufoLevel++;
         }
+
+        ufoLevel++;
     }
 };
 
@@ -84,6 +87,27 @@ const userInput = (codeword, codeDash, correctGuesses, incorrectGuesses) => {
 };
 
 
+
+const endGame = (isPlaying) => {
+    let x = true;
+
+    while(x) {
+        let playAgain = ps('Would you like to play again (Y/N)? ');
+
+        if(playAgain.toLowerCase() === 'y') {
+            isPlaying = true;
+            x = false;
+        } else if(playAgain.toLowerCase() === 'n') {
+            isPlaying = false;
+            x = false;
+        } 
+    } 
+
+    return isPlaying;
+}
+
+
+
 const testUser = (testWord = codeword) => {
     console.log(testWord);
     let letter = ps('enter a letter a-z: ');
@@ -98,21 +122,6 @@ const testUser = (testWord = codeword) => {
     console.log(`you picked ${letter} that is ${result? 'correct' : 'incorrect'}`);
     return result;
 };
-
-
-const endGame = (isPlaying) => {
-    let playAgain = ps('Would you like to play again (Y/N)? ');
-
-    if(playAgain.toLowerCase() === 'y') {
-        isPlaying = true;
-    } else if(playAgain.toLowerCase() === 'n') {
-        process.exit();
-    } else {
-        console.log('That is not a valid answer please type "Y" for yes or "N" for no');
-    }
-
-    return isPlaying;
-}
 
 
 const main = () => {
