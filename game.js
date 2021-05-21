@@ -55,24 +55,27 @@ const playGame = () => {
 };
 
 
+const setCharAt = (string, index, char) => {
+    if(index > string.length - 1) {
+        return string;
+    } else {
+        let newStr = string.substring(0, index) + char + string.substring(index + 1);
+        return newStr; 
+    }
+};
+
+
 const userInput = (codeword, codeDash) => {
     let userGuess = ps("Please enter your guess: ");
-    let subStr = "";
 
     if(codeword.toLowerCase().includes(userGuess.toLowerCase())) {
         console.log("Correct! Your're closer to cracking the codeword.");
-        for(let i=0; i < codeword.length - 1; i++) {
-            if(codeword.indexOf(userGuess) - 1) {
-                subStr += `${userGuess} `;
-            } else {
-                subStr += '_ ';
-            }
-        }
+        setCharAt(codeDash, codeword.indexOf(userGuess), userGuess);
     } else {
         console.log("Incorrect! The tractor beam pulls the person in further");
     }
 
-    codeDash = subStr;
+    console.log(codeDash);
     return codeDash;
 };
 
