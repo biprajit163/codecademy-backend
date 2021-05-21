@@ -14,40 +14,37 @@ const messageArr = message_data.split('\n');
 // Pick a random codeword from the nouns Arr;
 const nouns_data = fs.readFileSync('./data/nouns.txt', 'utf8');
 const nounsArr = nouns_data.split('\n');
-let codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
 
 
 const playGame = () => {
     
     let isPlaying = true;
-
-    let codeDash = "";
+    let codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
+    
     let ufoLevel = 0;
     let incorrectGuesses = [];
+    let correctGuesses = [];
+    let codeDash = [];
 
-    for(let i=0; i < codeword.length - 1; i++) {
-        codeDash += "_ ";
+    for(let i=0; i < codeword.length; i++) {
+        codeDash.push("_");
     }
 
     console.log("UFO: The Game" + "\n" + "Instructions: save us from alien abduction by guessing letters in the codeword");
 
     while(isPlaying === true) {
+
         if(ufoLevel === ufoArr.length) {
             endGame();
+            codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
             ufoLevel = 0;
         } else {
             console.log(ufoArr[ufoLevel]);
 
-            if(incorrectGuesses.length === 0) {
-                console.log("Incorrect Guesses:" + "\n" + "None" + '\n');
-            } else {
-                console.log("Incorrect Guesses:" + "\n" + incorrectGuesses.join(' ').toUpperCase() + '\n');
-            }
+            
 
             // logging code word with dashes
-            console.log(codeword);
-            console.log(codeDash + '\n');
-            userInput(codeword, codeDash);
+            userInput(codeword, codeDash, correctGuesses, incorrectGuesses);
 
             ufoLevel++;
         }
@@ -55,28 +52,37 @@ const playGame = () => {
 };
 
 
-const setCharAt = (string, index, char) => {
-    if(index > string.length - 1) {
-        return string;
+
+const userInput = (codeword, codeDash, correctGuesses, incorrectGuesses) => {
+    console.log(codeword);
+    
+    if(incorrectGuesses.length === 0) {
+        console.log("Incorrect Guesses:" + "\n" + "None" + '\n');
     } else {
-        let newStr = string.substring(0, index) + char + string.substring(index + 1);
-        return newStr; 
+        console.log("Incorrect Guesses:" + "\n" + incorrectGuesses.join(' ').toUpperCase() + '\n');
     }
-};
 
+    let result = codeDash.join(" ");
+    console.log(result);
 
-const userInput = (codeword, codeDash) => {
     let userGuess = ps("Please enter your guess: ");
 
-    if(codeword.toLowerCase().includes(userGuess.toLowerCase())) {
+    if(codeword.toLowerCase().includes(userGuess.toLowerCase()) === true) {
+        correctGuesses.push(userGuess);
         console.log("Correct! Your're closer to cracking the codeword.");
-        setCharAt(codeDash, codeword.indexOf(userGuess), userGuess);
-    } else {
+        let letterLocation = codeword.indexOf(userGuess);
+        
+        for(let i=0; i < codeDash.length; i++) {
+            if(letterLocation === i) {
+                codeDash[i] = userGuess;
+            }
+        }
+    } else if(codeword.toLowerCase().includes(userGuess.toLowerCase()) === false) {
+        incorrectGuesses.push(userGuess);
         console.log("Incorrect! The tractor beam pulls the person in further");
+    } else if(userGuess.split("").length > 1) {
+        console.log("That is not a correct guess please guess only one letter from a-z");
     }
-
-    console.log(codeDash);
-    return codeDash;
 };
 
 
