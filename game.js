@@ -41,8 +41,6 @@ const playGame = () => {
         } else {
             console.log(ufoArr[ufoLevel]);
 
-            
-
             // logging code word with dashes
             userInput(codeword, codeDash, correctGuesses, incorrectGuesses);
 
