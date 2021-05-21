@@ -14,12 +14,12 @@ const messageArr = message_data.split('\n');
 // Pick a random codeword from the nouns Arr;
 const nouns_data = fs.readFileSync('./data/nouns.txt', 'utf8');
 const nounsArr = nouns_data.split('\n');
+let codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
 
 
 const playGame = () => {
     
     let isPlaying = true;
-    let codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
     
     let ufoLevel = 0;
     let incorrectGuesses = [];
