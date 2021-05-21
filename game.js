@@ -21,46 +21,87 @@ const playGame = () => {
     
     let isPlaying = true;
 
-    while(isPlaying === true) {
+    let codeDash = "";
+    let ufoLevel = 0;
+    let incorrectGuesses = [];
 
-        // Game logic goes here
-        console.log('Game is Running');
-        testUser();
-        endGame(isPlaying);
+    for(let i=0; i < codeword.length - 1; i++) {
+        codeDash += "_ ";
     }
 
+    console.log("UFO: The Game" + "\n" + "Instructions: save us from alien abduction by guessing letters in the codeword");
+
+    while(isPlaying === true) {
+        if(ufoLevel === ufoArr.length) {
+            endGame();
+            ufoLevel = 0;
+        } else {
+            console.log(ufoArr[ufoLevel]);
+
+            if(incorrectGuesses.length === 0) {
+                console.log("Incorrect Guesses:" + "\n" + "None" + '\n');
+            } else {
+                console.log("Incorrect Guesses:" + "\n" + incorrectGuesses.join(' ').toUpperCase() + '\n');
+            }
+
+            // logging code word with dashes
+            console.log(codeword);
+            console.log(codeDash + '\n');
+            userInput(codeword, codeDash);
+
+            ufoLevel++;
+        }
+    }
 };
 
 
+const userInput = (codeword, codeDash) => {
+    let userGuess = ps("Please enter your guess: ");
+    let subStr = "";
 
-const testUser = (word = codeword) => {
-    console.log(word);
-    let letter = ps('pick a letter a-z: ');
+    if(codeword.toLowerCase().includes(userGuess.toLowerCase())) {
+        console.log("Correct! Your're closer to cracking the codeword.");
+        for(let i=0; i < codeword.length - 1; i++) {
+            if(codeword.indexOf(userGuess) - 1) {
+                subStr += `${userGuess} `;
+            } else {
+                subStr += '_ ';
+            }
+        }
+    } else {
+        console.log("Incorrect! The tractor beam pulls the person in further");
+    }
+
+    codeDash = subStr;
+    return codeDash;
+};
+
+
+const testUser = (testWord = codeword) => {
+    console.log(testWord);
+    let letter = ps('enter a letter a-z: ');
     let result;
-    let guessedLetters = [];
 
-    if(word.includes(letter)) {
-        guessedLetters.push(letter);
+    if(testWord.includes(letter)) {
         result = true;
     } else {
         result = false;
     }
-
     
-    console.log(`you picked ${letter} that is ${result}`);
+    console.log(`you picked ${letter} that is ${result? 'correct' : 'incorrect'}`);
     return result;
 };
 
 
 const endGame = (isPlaying) => {
-    let userAns = ps('Do you want to keep playing? [yes or no] : ');
+    let playAgain = ps('Would you like to play again (Y/N)? ');
 
-    if(userAns.toLowerCase() === 'yes') {
+    if(playAgain.toLowerCase() === 'y') {
         isPlaying = true;
-    } else if(userAns.toLowerCase() === 'no') {
+    } else if(playAgain.toLowerCase() === 'n') {
         process.exit();
     } else {
-        console.log('That is not a valid answer please type "yes" or "no"');
+        console.log('That is not a valid answer please type "Y" for yes or "N" for no');
     }
 
     return isPlaying;
