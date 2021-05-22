@@ -35,14 +35,18 @@ const playGame = () => {
 
   while (isPlaying === true) {
     if (
-      ufoLevel === ufoArr.length-1 ||
+      ufoLevel === ufoArr.length - 1 ||
       checkWin(codeword, codeDash) === true
     ) {
-      if (ufoLevel === ufoArr.length-1) {
+      if (ufoLevel === ufoArr.length - 1) {
         console.log("You lost the person is abducted!" + "\n");
       } else if (checkWin(codeword, codeDash) === true) {
-        console.log("Correct! You saved the person and earned a medal of honor!" 
-        + "\n" + "The codeword is:" + codeword);
+        console.log(
+          "Correct! You saved the person and earned a medal of honor!" +
+            "\n" +
+            "The codeword is:" +
+            codeword
+        );
       }
 
       isPlaying = endGame(isPlaying);
@@ -57,11 +61,14 @@ const playGame = () => {
 
       ufoLevel = 0;
     } else {
-
-        if(ufoLevel === 0 || correctGuesses.length === 0 || incorrectGuesses.length === 0) {
-            let displayUfo = ufoArr[ufoLevel]
-            console.log(displayUfo);
-        }
+      if (
+        ufoLevel === 0 ||
+        correctGuesses.length === 0 ||
+        incorrectGuesses.length === 0
+      ) {
+        let displayUfo = ufoArr[ufoLevel];
+        console.log(displayUfo);
+      }
 
       console.log(codeword);
 
@@ -78,46 +85,51 @@ const playGame = () => {
 
       console.log(codeDash.join(" ").toUpperCase());
 
-
       let checkLetter = true;
 
-      while(checkLetter) {
-          let userGuess = ps("Please enter your guess: ");
-          
-          if (codeword.toLowerCase().includes(userGuess.toLowerCase()) === true && userGuess !== "") {
-            checkLetter = false;
-            console.log(ufoArr[ufoLevel]);
-            correctGuesses.push(userGuess);
-    
-            if (checkWin(codeword, codeDash) === false) {
-              console.log("Correct! Your're closer to cracking the codeword." + "\n");
-            }
-    
-            for (let i = 0; i < codeDash.length; i++) {
-              if (userGuess === codeword.split("")[i]) {
-                codeDash[i] = userGuess;
-              }
-            }
-          } else if (
-            codeword.toLowerCase().includes(userGuess.toLowerCase()) === false && 
-            userGuess !== "" && userGuess.split("").length <= 1
-          ) {
-            checkLetter = false;
-            console.log(ufoArr[ufoLevel]);
-            incorrectGuesses.push(userGuess);
-            console.log("Incorrect! The tractor beam pulls the person in further" + "\n");
-            ufoLevel++;
-          } else if (userGuess.split("").length > 1) {
-              console.log(
-                "I cannot understand your input please guess a single letter" + "\n"
-              );
+      while (checkLetter) {
+        let userGuess = ps("Please enter your guess: ");
+
+        if (
+          codeword.toLowerCase().includes(userGuess.toLowerCase()) === true &&
+          userGuess !== ""
+        ) {
+          checkLetter = false;
+          console.log(ufoArr[ufoLevel]);
+          // correctGuesses.push(userGuess);
+
+          if (checkWin(codeword, codeDash) === false) {
+            console.log(
+              "Correct! Your're closer to cracking the codeword." + "\n"
+            );
           }
+
+          for (let i = 0; i < codeDash.length; i++) {
+            if (userGuess.toLowerCase() === codeword.split("")[i]) {
+              codeDash[i] = userGuess;
+            }
+          }
+        } else if (
+          codeword.toLowerCase().includes(userGuess.toLowerCase()) === false &&
+          userGuess !== "" &&
+          userGuess.split("").length <= 1
+        ) {
+          checkLetter = false;
+          console.log(ufoArr[ufoLevel]);
+          incorrectGuesses.push(userGuess);
+          console.log(
+            "Incorrect! The tractor beam pulls the person in further" + "\n"
+          );
+          ufoLevel++;
+        } else if (userGuess.split("").length > 1) {
+          console.log(
+            "I cannot understand your input please guess a single letter" + "\n"
+          );
+        }
       }
     }
   }
 };
-
-
 
 const checkWin = (codeword, codeDash) => {
   let codewordArr = codeword.split("");
@@ -132,8 +144,6 @@ const checkWin = (codeword, codeDash) => {
   return result;
 };
 
-
-
 const endGame = (isPlaying) => {
   let run = true;
 
@@ -144,7 +154,7 @@ const endGame = (isPlaying) => {
       isPlaying = true;
       run = false;
     } else if (playAgain.toLowerCase() === "n") {
-        console.log("Goodbye!" + "\n");
+      console.log("Goodbye!" + "\n");
       isPlaying = false;
       run = false;
     }
@@ -152,8 +162,6 @@ const endGame = (isPlaying) => {
 
   return isPlaying;
 };
-
-
 
 const testUser = (testWord = codeword) => {
   console.log(testWord);
