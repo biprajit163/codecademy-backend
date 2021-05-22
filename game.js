@@ -96,7 +96,7 @@ const playGame = () => {
         ) {
           checkLetter = false;
           console.log(ufoArr[ufoLevel]);
-          // correctGuesses.push(userGuess);
+          correctGuesses.push(userGuess.toLowerCase());
 
           if (checkWin(codeword, codeDash) === false) {
             console.log(
@@ -162,6 +162,16 @@ const endGame = (isPlaying) => {
 
   return isPlaying;
 };
+
+
+const potentialWords = (correctGuesses, incorrectGuesses, userGuess, codeDash, codeword) => {
+    if(
+        correctGuesses.includes(userInput) && 
+        !incorrectGuesses.includes(userInput) &&
+        codeDash.length === codeword.split("").length 
+    ) {}
+};
+
 
 const testUser = (testWord = codeword) => {
   console.log(testWord);
