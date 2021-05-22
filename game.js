@@ -35,10 +35,10 @@ const playGame = () => {
 
   while (isPlaying === true) {
     if (
-      ufoLevel === ufoArr.length ||
+      ufoLevel === ufoArr.length-1 ||
       checkWin(codeword, codeDash) === true
     ) {
-      if (ufoLevel === ufoArr.length) {
+      if (ufoLevel === ufoArr.length-1) {
         console.log("You lost the person is abducted!" + "\n");
       } else if (checkWin(codeword, codeDash) === true) {
         console.log("Correct! You saved the person and earned a medal of honor!" 
