@@ -14,10 +14,12 @@ const nouns_data = fs.readFileSync("./data/nouns.txt", "utf8");
 const nounsArr = nouns_data.split("\n");
 let codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
 
+
 const playGame = () => {
   let isPlaying = true;
 
   let ufoLevel = 0;
+  let nounsMatches = 0;
   let incorrectGuesses = [];
   let correctGuesses = [];
 
@@ -84,6 +86,9 @@ const playGame = () => {
       }
 
       console.log(codeDash.join(" ").toUpperCase());
+
+      nounsMatches = potentialWords(correctGuesses, incorrectGuesses, codeDash);
+      console.log(`Number of dictionary matches: ${nounsMatches}`);
 
       let checkLetter = true;
 
@@ -164,12 +169,32 @@ const endGame = (isPlaying) => {
 };
 
 
-const potentialWords = (correctGuesses, incorrectGuesses, userGuess, codeDash, codeword) => {
+const potentialWords = (correctGuesses, incorrectGuesses, codeDash) => {
+  let ptWrdsArr = [];
+  let nounsIndex = 0;
+  let correctIndex = 0;
+  let incorrectIndex = 0;
+  
+  while(nounsIndex < nounsArr.length) {
+    if(correctGuesses.length) correctIndex = 0;
+    if(incorrectGuesses.length) incorrectIndex = 0;
+
     if(
-        correctGuesses.includes(userInput) && 
-        !incorrectGuesses.includes(userInput) &&
-        codeDash.length === codeword.split("").length 
-    ) {}
+      nounsArr[nounsIndex].includes(correctGuesses[correctIndex]) && 
+      !nounsArr[nounsIndex].includes(incorrectGuesses[incorrectIndex]) &&
+      nounsArr[nounsIndex].length === codeDash.length 
+    ) {
+      ptWrdsArr.push(nounsArr[nounsIndex]);
+      let noDupl = [...new Set(ptWrdsArr)];
+      ptWrdsArr = noDupl 
+    }
+
+    correctIndex++;
+    incorrectIndex++;
+    nounsIndex++;
+  }
+
+  return ptWrdsArr.length;
 };
 
 
