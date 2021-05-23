@@ -73,8 +73,8 @@ const playGame = () => {
       }
 
       console.log(codeword);
-      console.log("correct guesses: " + correctGuesses);
-      console.log("incorrect guesses: " + incorrectGuesses + "\n");
+      // console.log("correct guesses: " + correctGuesses);
+      // console.log("incorrect guesses: " + incorrectGuesses + "\n");
 
       if (incorrectGuesses.length === 0) {
         console.log("Incorrect Guesses:" + "\n" + "None" + "\n");
@@ -89,8 +89,8 @@ const playGame = () => {
 
       console.log(codeDash.join(" ").toUpperCase());
 
-      nounsMatches = potentialWords(correctGuesses, incorrectGuesses, codeDash);
-      console.log(`Number of dictionary matches: ${nounsMatches}`);
+      // nounsMatches = potentialWords(correctGuesses, incorrectGuesses, codeDash);
+      // console.log(`Number of dictionary matches: ${nounsMatches}` + "\n");
 
       let checkLetter = true;
 
@@ -172,60 +172,63 @@ const endGame = (isPlaying) => {
 
 
 const potentialWords = (correctGuesses, incorrectGuesses, codeDash) => {
-  let ptWrdsArr = [];
+  let checkWords = [];
   let nounsIndex = 0;
   
   while(nounsIndex < nounsArr.length) {
-    // if(nounsArr[nounsIndex].length === codeDash.length) {
-    //   let checkCorrect = false;
-    //   let checkIncorrect = false;
-    //   let checkCodeDash = false;
-    //   let codeDashLetters = [];
+    let checkCorrect = false;
+    // let checkIncorrect = false;
+    let checkLength = false;
+    let checkIndex = false;
 
-    //   for(let i=0; i < correctGuesses.length; i++) {
-    //     if(nounsArr[nounsIndex].includes(correctGuesses[i])) checkCorrect = true;
-    //   }
-
-    //   for(let i=0; i < incorrectGuesses.length; i++) {
-    //     if(!nounsArr[nounsIndex].includes(incorrectGuesses[i])) checkIncorrect = true;
-    //   }
-
-    //   for(let i=0; i < codeDash.length; i++) {
-    //     if(codeDash[i] !== "_") {
-    //       codeDashLetters.push(codeDash[i])
-    //     }
-    //   }
-
-    //   if(nounsArr[nounsIndex].includes(codeDashLetters.join(""))) checkCodeDash = true;
-
-    //   if(
-    //     checkCorrect === true && 
-    //     checkIncorrect === true &&
-    //     checkCodeDash === true
-    //   ) {
-    //     ptWrdsArr.push(nounsArr[nounsIndex]);
-    //     let noDupl = [...new Set(ptWrdsArr)];
-    //     ptWrdsArr = noDupl 
-    //   }
-    // }
-
-    let check = false;
     if(nounsArr[nounsIndex].length === codeDash.length) {
-      for(let i=0; i < codeDash.length; i++) {
-        if(codeDash[i] === nounsArr[nounsIndex].split("")[i]) check = true;
+      checkLength = true;
+    }
+
+    for(let i=0; i < correctGuesses.length; i++) {
+      let prev = 0;
+
+      while(prev <= i) {
+        if(
+          nounsArr[nounsIndex].includes(correctGuesses[prev]) &&
+          codeDash.includes(correctGuesses[prev]) &&
+          nounsArr[nounsIndex].indexOf(correctGuesses[prev]) === codeDash.indexOf(correctGuesses[prev])
+        ) {
+          checkCorrect = true;
+          checkIndex = true;
+        }
+        prev++;
       }
     }
-    if(check === true) {
-      ptWrdsArr.push(nounsArr[nounsIndex]);
-      let noDupl = [...new Set(ptWrdsArr)];
-      ptWrdsArr = noDupl 
-    }
+
+    // for(let i=0; i < incorrectGuesses.length; i++) {
+    //   if(nounsArr[nounsIndex].includes(incorrectGuesses[i]) === false) {
+    //     checkIncorrect = true;
+    //   }
+    // }
+    
+    if(
+      checkCorrect === true &&
+      // checkIncorrect === true &&
+      checkLength === true &&
+      checkIndex === true
+    ) {
+      checkWords.push(nounsArr[nounsIndex]);
+      let noDupl = [...new Set(checkWords)];
+      checkWords = noDupl; 
+    } 
 
     nounsIndex++;
   }
 
-  console.log(ptWrdsArr);
-  return ptWrdsArr.length;
+  for(let i=0; i < checkWords.length; i++) {
+    if(checkWords[i].includes(codeDash.join("")) === false) {
+      checkWords.splice(i, 1);
+    }
+  }
+
+  console.log(checkWords);
+  return checkWords.length;
 };
 
 
