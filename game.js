@@ -175,10 +175,10 @@ const potentialWords = (codeDash, codeword, similarity = 0, dashPercent = 0) => 
   let codewordArr = codeword.split(" ");
   let nounsIndex = 0;
   let possibleWords = 0;
+  let codewordNum = 0;
+  let codeDashNum = 0;
   
   while(nounsIndex < nounsArr.length) {
-    let codewordNum = 0;
-    let codeDashNum = 0;
     let letterCount = 0;
 
     for(let i=0; i < codeDash.length; i++) {
@@ -191,14 +191,17 @@ const potentialWords = (codeDash, codeword, similarity = 0, dashPercent = 0) => 
     }
 
     dashPercent = letterCount/codeDash.length;
-    similarity = codeDashNum/codewordNum;
+    similarity = (codeDashNum/codewordNum);
 
     if(similarity.toFixed(2) >= dashPercent.toFixed(2)) possibleWords++;
     
     nounsIndex++;
   }
 
-  console.log(`Dash Percent ${dashPercet.toFixed(2)}`);
+  console.log(`codewordNum ${codewordNum}`);
+  console.log(`codeDashNum ${codeDashNum}`);
+
+  console.log(`Dash Percent ${dashPercent.toFixed(2)}`);
   console.log(`similarity Percent ${similarity.toFixed(2)}`);
   return possibleWords;
 };
