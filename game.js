@@ -74,6 +74,8 @@ const playGame = () => {
       }
 
       console.log(codeword);
+      // console.log("correct guesses: " + correctGuesses);
+      // console.log("incorrect guesses: " + incorrectGuesses + "\n");
 
       if (incorrectGuesses.length === 0) {
         console.log("Incorrect Guesses:" + "\n" + "None" + "\n");
@@ -88,8 +90,8 @@ const playGame = () => {
 
       console.log(codeDash.join(" ").toUpperCase());
 
-      nounsMatches = potentialWords(correctGuesses, incorrectGuesses, codeDash);
-      console.log(`Number of dictionary matches: ${nounsMatches}`);
+      nounsMatches = potentialWords(codeDash, codeword);
+      console.log(`Number of dictionary matches: ${nounsMatches}` + "\n");
 
       let checkLetter = true;
 
@@ -170,32 +172,39 @@ const endGame = (isPlaying) => {
 };
 
 
-const potentialWords = (correctGuesses, incorrectGuesses, codeDash) => {
-  let ptWrdsArr = [];
+const potentialWords = (codeDash, codeword, similarity = 0, dashPercent = 0) => {
+  let codewordArr = codeword.split(" ");
   let nounsIndex = 0;
-  let correctIndex = 0;
-  let incorrectIndex = 0;
+  let possibleWords = 0;
+  let codewordNum = 0;
+  let codeDashNum = 0;
   
   while(nounsIndex < nounsArr.length) {
-    if(correctGuesses.length) correctIndex = 0;
-    if(incorrectGuesses.length) incorrectIndex = 0;
+    let letterCount = 0;
 
-    if(
-      nounsArr[nounsIndex].includes(correctGuesses[correctIndex]) && 
-      !nounsArr[nounsIndex].includes(incorrectGuesses[incorrectIndex]) &&
-      nounsArr[nounsIndex].length === codeDash.length 
-    ) {
-      ptWrdsArr.push(nounsArr[nounsIndex]);
-      let noDupl = [...new Set(ptWrdsArr)];
-      ptWrdsArr = noDupl 
+    for(let i=0; i < codeDash.length; i++) {
+      if(codeDash[i] !== "_") letterCount++;
+      codeDashNum += codeDash[i].charCodeAt(0);
     }
 
-    correctIndex++;
-    incorrectIndex++;
+    for(let i=0; i < codewordArr.length; i++) {
+      codewordNum += codewordArr[i].charCodeAt(0);
+    }
+
+    dashPercent = letterCount/codeDash.length;
+    similarity = (codeDashNum/codewordNum);
+
+    if(similarity.toFixed(2) >= dashPercent.toFixed(2)) possibleWords++;
+    
     nounsIndex++;
   }
 
-  return ptWrdsArr.length;
+  console.log(`codewordNum ${codewordNum}`);
+  console.log(`codeDashNum ${codeDashNum}`);
+
+  console.log(`Dash Percent ${dashPercent.toFixed(2)}`);
+  console.log(`similarity Percent ${similarity.toFixed(2)}`);
+  return possibleWords;
 };
 
 
