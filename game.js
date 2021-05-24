@@ -22,7 +22,7 @@ const playGame = () => {
   let correctGuesses = [];
 
   let codeDash = [];
-  for (let i = 0; i < codeword.length - 1; i++) {
+  for (let i = 1; i < codeword.length; i++) {
     codeDash.push("_");
   }
 
@@ -55,7 +55,7 @@ const playGame = () => {
       codeDash = [];
       correctGuesses = [];
       incorrectGuesses = [];
-      for (let i = 0; i < codeword.length - 1; i++) {
+      for (let i = 1; i < codeword.length; i++) {
         codeDash.push("_");
       }
       ufoLevel = 0;
