@@ -9,7 +9,6 @@ const ufoArr = ufo_data.ufo_arr;
 const message_data = fs.readFileSync("./data/messages.txt", "utf8");
 const messageArr = message_data.split("\n");
 
-// Pick a random codeword from the nouns Arr;
 const nouns_data = fs.readFileSync("./data/nouns.txt", "utf8");
 const nounsArr = nouns_data.split("\n");
 let codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
@@ -22,7 +21,7 @@ const playGame = () => {
   let correctGuesses = [];
 
   let codeDash = [];
-  for (let i = 1; i < codeword.length; i++) {
+  for (let i = 0; i < codeword.length - 1; i++) {
     codeDash.push("_");
   }
 
@@ -39,25 +38,34 @@ const playGame = () => {
       checkWin(codeword, codeDash) === true
     ) {
       if (ufoLevel === ufoArr.length - 1) {
-        console.log("You lost the person is abducted!" + "\n");
+        console.log(
+          "You lost the person is abducted!" + 
+          "\n" + 
+          "The codeword is: " + 
+          codeword + 
+          "\n"
+        );
       } else if (checkWin(codeword, codeDash) === true) {
         console.log(
           "Correct! You saved the person and earned a medal of honor!" +
-            "\n" +
-            "The codeword is:" +
-            codeword +
-            "\n"
+          "\n" +
+          "The codeword is:" +
+          codeword +
+          "\n"
         );
       }
 
       isPlaying = endGame(isPlaying);
       codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
+      
       codeDash = [];
       correctGuesses = [];
       incorrectGuesses = [];
-      for (let i = 1; i < codeword.length; i++) {
+      
+      for (let i = 0; i < codeword.length - 1; i++) {
         codeDash.push("_");
       }
+
       ufoLevel = 0;
     } else {
       if (
@@ -68,8 +76,6 @@ const playGame = () => {
         let displayUfo = ufoArr[ufoLevel];
         console.log(displayUfo + "\n");
       }
-
-      console.log(codeword);
 
       if (incorrectGuesses.length === 0) {
         console.log("Incorrect Guesses:" + "\n" + "None" + "\n");
@@ -95,6 +101,7 @@ const playGame = () => {
         ) {
           checkLetter = false;
           console.log(ufoArr[ufoLevel] + "\n");
+          
           correctGuesses.push(userGuess.toLowerCase());
           correctGuesses = [...new Set(correctGuesses)];
 
@@ -116,8 +123,10 @@ const playGame = () => {
         ) {
           checkLetter = false;
           console.log(ufoArr[ufoLevel] + "\n");
+          
           incorrectGuesses.push(userGuess);
           incorrectGuesses = [...new Set(incorrectGuesses)];
+          
           console.log(encourageMessage(messageArr) + "\n");
           ufoLevel++;
         } else if (userGuess.split("").length > 1) {
