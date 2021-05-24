@@ -2,9 +2,10 @@
 
 ## Setup
 1) unzip the file by right-clicking the zipped folder and select extract all
-2) make sure you have **node** and **npm** installed, if not install them 
+2) If you are getting this from GitHub simply clone the repository
+3) make sure you have **node** and **npm** installed, if not install them 
     - you can write **node --version** and **npm --version** on your terminal/console to check if you have them
-3) open the unzipped file on your favorite edditor and lets get started
+4) open the unzipped file on your favorite edditor and lets get started
 
 ## Start the game
 > run **npm install** to install all the dependencies
