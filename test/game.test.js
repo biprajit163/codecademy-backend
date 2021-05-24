@@ -3,8 +3,8 @@ const assert = require('chai').assert;
 const { testUser } = require('../game');
 
 
-describe('Array', () => {
-    describe('correct letter', () => {
+describe('Unit tests for correct letter and incorrect letter' + "\n", () => {
+    describe('Guess a letter that is in the codeword', () => {
         it('return true if letter is inside codeword', () => {
             let usrAns = testUser();
             assert.equal(usrAns, true);
@@ -12,7 +12,7 @@ describe('Array', () => {
         });
     });
 
-    describe('incorrect letter', () => {
+    describe('Guess a letter that is not in the codeword', () => {
         it('return false if letter is not inside codeword', () => {
             let usrAns = testUser();
             assert.equal(usrAns, false);

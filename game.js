@@ -9,18 +9,15 @@ const ufoArr = ufo_data.ufo_arr;
 const message_data = fs.readFileSync("./data/messages.txt", "utf8");
 const messageArr = message_data.split("\n");
 
-
 // Pick a random codeword from the nouns Arr;
 const nouns_data = fs.readFileSync("./data/nouns.txt", "utf8");
 const nounsArr = nouns_data.split("\n");
 let codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
 
-
 const playGame = () => {
   let isPlaying = true;
 
   let ufoLevel = 0;
-  let nounsMatches = 0;
   let incorrectGuesses = [];
   let correctGuesses = [];
 
@@ -48,12 +45,12 @@ const playGame = () => {
           "Correct! You saved the person and earned a medal of honor!" +
             "\n" +
             "The codeword is:" +
-            codeword
+            codeword +
+            "\n"
         );
       }
 
       isPlaying = endGame(isPlaying);
-
       codeword = nounsArr[Math.floor(Math.random() * nounsArr.length)];
       codeDash = [];
       correctGuesses = [];
@@ -61,7 +58,6 @@ const playGame = () => {
       for (let i = 0; i < codeword.length - 1; i++) {
         codeDash.push("_");
       }
-
       ufoLevel = 0;
     } else {
       if (
@@ -70,7 +66,7 @@ const playGame = () => {
         incorrectGuesses.length === 0
       ) {
         let displayUfo = ufoArr[ufoLevel];
-        console.log(displayUfo);
+        console.log(displayUfo + "\n");
       }
 
       console.log(codeword);
@@ -86,7 +82,7 @@ const playGame = () => {
         );
       }
 
-      console.log(codeDash.join(" ").toUpperCase());
+      console.log("Codeword:" + "\n" + codeDash.join(" ").toUpperCase() + "\n");
 
       let checkLetter = true;
 
@@ -98,8 +94,9 @@ const playGame = () => {
           userGuess !== ""
         ) {
           checkLetter = false;
-          console.log(ufoArr[ufoLevel]);
+          console.log(ufoArr[ufoLevel] + "\n");
           correctGuesses.push(userGuess.toLowerCase());
+          correctGuesses = [...new Set(correctGuesses)];
 
           if (checkWin(codeword, codeDash) === false) {
             console.log(
@@ -118,9 +115,10 @@ const playGame = () => {
           userGuess.split("").length <= 1
         ) {
           checkLetter = false;
-          console.log(ufoArr[ufoLevel]);
+          console.log(ufoArr[ufoLevel] + "\n");
           incorrectGuesses.push(userGuess);
-          console.log(encourageMessage(messageArr));
+          incorrectGuesses = [...new Set(incorrectGuesses)];
+          console.log(encourageMessage(messageArr) + "\n");
           ufoLevel++;
         } else if (userGuess.split("").length > 1) {
           console.log(
@@ -145,12 +143,10 @@ const checkWin = (codeword, codeDash) => {
   return result;
 };
 
-
 const encourageMessage = (encourage) => {
   let randIndex = Math.floor(Math.random() * encourage.length);
   return encourage[randIndex];
 };
-
 
 const endGame = (isPlaying) => {
   let run = true;
@@ -171,20 +167,19 @@ const endGame = (isPlaying) => {
   return isPlaying;
 };
 
-
 const testUser = (testWord = codeword) => {
-  console.log(testWord);
+  console.log(`codeword: ${testWord}`);
   let letter = ps("enter a letter a-z: ");
   let result;
 
-  if (testWord.includes(letter)) {
+  if (testWord.includes(letter.toLowerCase())) {
     result = true;
   } else {
     result = false;
   }
 
   console.log(
-    `you picked ${letter} that is ${result ? "correct" : "incorrect"}`
+    `you picked ${letter} that is ${result ? "correct" : "incorrect"}` + "\n"
   );
   return result;
 };

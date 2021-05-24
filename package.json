@@ -5,7 +5,7 @@
   "main": "game.js",
   "scripts": {
     "start": "NODE_ENV=development node game.js",
-    "test": "NODE_ENV=test mocha './test' --timeout 10000 || true"
+    "test": "NODE_ENV=test mocha './test' --timeout 15000 || true"
   },
   "repository": {
     "type": "git",
